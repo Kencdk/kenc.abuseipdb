@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Kencdk/kenc.abuseipdb</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Kencdk/kenc.abuseipdb.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>abuseipdb</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
