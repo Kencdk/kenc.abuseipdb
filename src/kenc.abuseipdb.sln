@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kenc.AbuseIPDB", "Kenc.AbuseIPDB\Kenc.AbuseIPDB.csproj", "{9FAB22DB-13F6-40E4-8056-A8776EB77683}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kenc.AbuseIPDB.Tests", "Kenc.AbuseIPDB.Tests\Kenc.AbuseIPDB.Tests.csproj", "{7AF8E306-EE9F-4940-8B81-C72FF8EE8919}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FAB22DB-13F6-40E4-8056-A8776EB77683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FAB22DB-13F6-40E4-8056-A8776EB77683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FAB22DB-13F6-40E4-8056-A8776EB77683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FAB22DB-13F6-40E4-8056-A8776EB77683}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AF8E306-EE9F-4940-8B81-C72FF8EE8919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AF8E306-EE9F-4940-8B81-C72FF8EE8919}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AF8E306-EE9F-4940-8B81-C72FF8EE8919}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AF8E306-EE9F-4940-8B81-C72FF8EE8919}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF3852C6-E5A9-42B7-A059-73E61897A4F1}
+	EndGlobalSection
+EndGlobal
