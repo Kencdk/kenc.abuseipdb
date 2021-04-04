@@ -30,10 +30,10 @@
         [TestMethod]
         public async Task HandleErrorsCorrectly()
         {
-            static async Task fdas() =>
+            static async Task action() =>
                 await client.ReportAsync("127.0.0.2", "Validation testing report endpoint", new[] { Category.BadWebBot });
 
-            ApiException exception = await Assert.ThrowsExceptionAsync<ApiException>(fdas);
+            ApiException exception = await Assert.ThrowsExceptionAsync<ApiException>(action);
 
             ApiReplies.Error firstError = exception.Errors[0];
             firstError.Status.Should().Be(HttpStatusCode.Forbidden);
@@ -49,6 +49,18 @@
 
             data.IpAddress.Should().Be(ip);
             data.CountryCode.Should().Be("US");
+        }
+
+        [TestMethod]
+        public async Task DoCheckBlock()
+        {
+            (Entities.CheckBlockData data, RateLimit _) = await client.CheckBlockAsync("127.0.0.1/24");
+            data.NetworkAddress.Should().Be("127.0.0.1");
+            data.Netmask.Should().Be("255.255.255.0");
+            data.MinAddress.Should().Be("127.0.0.1");
+            data.MaxAddress.Should().Be("127.0.0.254");
+            data.NumPossibleHosts.Should().Be(254);
+            data.AddressSpaceDesc.Should().Be("Loopback");
         }
     }
 }
