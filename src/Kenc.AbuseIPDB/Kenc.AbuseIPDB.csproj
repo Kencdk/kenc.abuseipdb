@@ -3,12 +3,27 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <!-- nuget package properties -->
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Kenc.AbuseIPDB</PackageId>
+    <PackageDescription>.net core standard library for interacting with the AbuseIPDB API v2.</PackageDescription>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/Kencdk/kenc.abuseipdb</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Kencdk/kenc.abuseipdb.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>abuseipdb</PackageTags>
+
+    <PackageTags>AbuseIPDB</PackageTags>
+    <Copyright>2021 Ken Christensen</Copyright>
+    <Description>.net core standard library for interacting with the AbuseIPDB API v2.</Description>
+
+    <!-- source link properties -->
+    <RepositoryType>Github</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <RepositoryUrl>https://github.com/Kencdk/Kenc.abuseipdb/</RepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
   <ItemGroup>
