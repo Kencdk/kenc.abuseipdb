@@ -1,5 +1,6 @@
 ﻿namespace Kenc.AbuseIPDB.Tests
 {
+    using System;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
@@ -19,12 +20,20 @@
         public static void ClassInitialiser(TestContext context)
         {
             IntegrationTests.context = context;
-            var apiKey = (string)context.Properties["apikey"];
+            var apiKey = ReadProperty("apiKey");
+
             if (string.IsNullOrEmpty(apiKey))
             {
-                throw new System.Exception("API Key not specified. Cannot run tests");
+                throw new Exception("API Key not specified. Cannot run tests");
             }
             client = new AbuseIPDBClient(httpClient: new HttpClient(), apiKey, AbuseIpDbEndpoints.V2Endpoint);
+        }
+
+        private static string ReadProperty(string key)
+        {
+            return context.Properties.Contains(key) ?
+                (string)context.Properties[key] :
+                Environment.GetEnvironmentVariable($"testsettings-{key}");
         }
 
         [TestMethod]
@@ -44,7 +53,7 @@
         [TestMethod]
         public async Task DoIPLookup()
         {
-            var ip = (string)context.Properties["ipaddress"];
+            var ip = ReadProperty("ipaddress");
             (Entities.Check data, RateLimit _) = await client.CheckAsync(ip, 90, false, CancellationToken.None);
 
             data.IpAddress.Should().Be(ip);
