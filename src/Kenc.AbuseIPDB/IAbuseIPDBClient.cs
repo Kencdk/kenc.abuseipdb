@@ -32,7 +32,19 @@
         /// <param name="categories">Categories of the report.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
-        /// <remarks> STRIP ANY PERSONALLY IDENTIFIABLE INFORMATION (PPI); AbuseIPDB IS NOT RESPONSIBLE FOR PPI YOU REVEAL.</remarks>
+        /// <remarks>STRIP ANY PERSONALLY IDENTIFIABLE INFORMATION (PPI); AbuseIPDB IS NOT RESPONSIBLE FOR PII YOU REVEAL.</remarks>
         Task<(ReportUpdate Data, RateLimit rateLimit)> ReportAsync(string ip, string comment, Category[] categories, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// The check-block endpoint accepts a subnet (v4 or v6) denoted with CIDR notation.
+        /// The maxAgeInDays parameter determines how old the reports considered in the query search can be.
+        /// The desired data is stored in the data property.Here you can inspect details regarding the network queried, such as the netmask of the subnet, the number of hosts it can possibly contain, and the assigned description of the address space.
+        /// The network should be url-encoded, because the network parameter contains a forward slash, which is a reserved character in URIs.
+        /// </summary>
+        /// <param name="ipBlock">CIDR notation of either an IPv4 or IPv6 subnet.</param>
+        /// <param name="maxAgeInDays">Max number of days.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns></returns>
+        Task<(CheckBlockData data, RateLimit rateLimit)> CheckBlockAsync(string ipBlock, int maxAgeInDays = 30, CancellationToken cancellationToken = default);
     }
 }

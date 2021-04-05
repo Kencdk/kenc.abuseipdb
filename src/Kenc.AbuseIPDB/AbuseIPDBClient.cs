@@ -22,7 +22,7 @@
     {
         private readonly Uri baseUri;
         private readonly HttpClient httpClient;
-        private static readonly JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+        private static readonly JsonSerializerOptions jsonSerializerOptions = new()
         {
             IgnoreNullValues = true
         };
@@ -78,6 +78,14 @@
             HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(targetUri, null, cancellationToken);
 
             return await HandleSingleResultAsync<ReportUpdate>(httpResponseMessage, cancellationToken);
+        }
+
+        public async Task<(CheckBlockData data, RateLimit rateLimit)> CheckBlockAsync(string ipBlock, int maxAgeInDays = 30, CancellationToken cancellationToken = default)
+        {
+            var targetUri = new Uri(baseUri, $"check-block?network={HttpUtility.UrlEncode(ipBlock)}&maxAgeInDays={maxAgeInDays}");
+            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(targetUri, cancellationToken);
+
+            return await HandleSingleResultAsync<CheckBlockData>(httpResponseMessage, cancellationToken);
         }
 
         private async Task<(T Data, RateLimit RateLimit)> HandleResultAsync<T>(HttpResponseMessage httpResponseMessage, CancellationToken cancellationToken) where T : IApiReply
