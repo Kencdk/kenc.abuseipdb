@@ -1,6 +1,7 @@
 ﻿namespace Kenc.AbuseIPDB.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
@@ -8,6 +9,8 @@
     using FluentAssertions;
     using Kenc.AbuseIPDB.Entities;
     using Kenc.AbuseIPDB.Exceptions;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
     using Moq.Protected;
@@ -25,6 +28,7 @@
                 Content = content,
             };
 
+            response.Headers.Add("Retry-After", "100");
             response.Headers.Add("X-RateLimit-Limit", "1000");
             response.Headers.Add("X-RateLimit-Remaining", "100");
             response.Headers.Add("X-RateLimit-Reset", "1545973200");
@@ -45,6 +49,7 @@
             rateLimit.Limit.Should().Be(1000);
             rateLimit.Remaining.Should().Be(100);
             rateLimit.Reset.Should().Be(new DateTimeOffset(2018, 12, 28, 5, 0, 0, TimeSpan.Zero));
+            rateLimit.RetryAfter.Should().Be(100);
         }
 
         [TestMethod]
@@ -83,6 +88,34 @@
             ApiReplies.Error firstError = exception.Errors[0];
             firstError.Status.Should().Be(HttpStatusCode.TooManyRequests);
             firstError.Detail.Should().Be("Daily rate limit of 1000 requests exceeded for this endpoint. See headers for additional details.");
+        }
+
+        [TestMethod]
+        public void DependencyInjectionRegistersAsExpected()
+        {
+            var myConfiguration = new Dictionary<string, string>
+            {
+                { "APIKey", "Value1" },
+                { "APIEndpoint", AbuseIpDbEndpoints.V2Endpoint.AbsoluteUri },
+            };
+
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(myConfiguration)
+                .Build();
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddHttpClient();
+            serviceCollection.AddAbuseIPDBClient(configuration);
+            ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+
+            IAbuseIPDBClient resolvedService = serviceProvider.GetService<IAbuseIPDBClient>();
+            resolvedService.Should().NotBeNull();
+        }
+
+        [TestMethod]
+        public void V2EndpointIsAsExpected()
+        {
+            AbuseIpDbEndpoints.V2Endpoint.AbsoluteUri.Should().Be("https://api.abuseipdb.com/api/v2/");
         }
     }
 }

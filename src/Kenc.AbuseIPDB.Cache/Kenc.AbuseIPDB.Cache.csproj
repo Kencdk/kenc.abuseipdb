@@ -8,8 +8,8 @@
   <!-- nuget package properties -->
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>Kenc.AbuseIPDB</PackageId>
-    <PackageDescription>.net core standard library for interacting with the AbuseIPDB API v2.</PackageDescription>
+    <PackageId>Kenc.AbuseIPDB.Cache</PackageId>
+    <PackageDescription>Cache for Kenc.AbuseIPDB based on LazyCache.</PackageDescription>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/Kencdk/kenc.abuseipdb</PackageProjectUrl>
@@ -17,7 +17,7 @@
 
     <PackageTags>AbuseIPDB</PackageTags>
     <Copyright>2021 Ken Christensen</Copyright>
-    <Description>.net core standard library for interacting with the AbuseIPDB API v2.</Description>
+    <Description>Cache for Kenc.AbuseIPDB based on LazyCache.</Description>
 
     <!-- source link properties -->
     <RepositoryType>Github</RepositoryType>
@@ -29,15 +29,19 @@
 
   <ItemGroup>
     <PackageReference Include="LazyCache" Version="2.1.3" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
-    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kenc.AbuseIPDB\Kenc.AbuseIPDB.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>Kenc.AbuseIPDB.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 </Project>

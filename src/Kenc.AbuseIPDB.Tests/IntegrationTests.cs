@@ -11,6 +11,7 @@
 
     [TestClass]
     [TestCategory(TestConstants.IntegrationTests)]
+    [TestCategory("SkipWhenLiveUnitTesting")]
     public class IntegrationTests
     {
         private static IAbuseIPDBClient client;
