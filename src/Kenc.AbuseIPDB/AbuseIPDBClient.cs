@@ -3,8 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Net.Http;
     using System.Net.Http.Json;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
     using System.Text.Json;
     using System.Threading;
     using System.Threading.Tasks;
@@ -49,9 +52,14 @@
             _ = string.IsNullOrEmpty(apiKey) ? throw new ArgumentNullException(nameof(apiKey)) : apiKey;
             baseUri = apiEndpoint ?? throw new ArgumentNullException(nameof(apiEndpoint));
 
+            Type client = typeof(AbuseIPDBClient);
+            AssemblyFileVersionAttribute runtimeVersion = client.Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
+            var userAgent = $"{client.FullName}/{runtimeVersion.Version} ({RuntimeInformation.OSDescription} {RuntimeInformation.ProcessArchitecture})";
+
             this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             this.httpClient.DefaultRequestHeaders.Add("Key", apiKey);
             this.httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            httpClient.DefaultRequestHeaders.Add(HttpRequestHeader.UserAgent.ToString(), userAgent);
         }
 
         public async Task<(IReadOnlyList<BlackListEntry> Data, BlackListMetadata Metadata, RateLimit RateLimit)> BlackListAsync(int confidenceMinimum = 100, int limit = 10000, CancellationToken cancellationToken = default)
@@ -74,7 +82,7 @@
         public async Task<(ReportUpdate Data, RateLimit rateLimit)> ReportAsync(string ip, string comment, Category[] categories, CancellationToken cancellationToken = default)
         {
             var categoryStr = string.Join(",", categories.Select(x => (int)x));
-            var targetUri = new Uri(baseUri, $"report?ip={HttpUtility.UrlEncode(ip)}&categories={categoryStr}&comment={HttpUtility.UrlEncode(comment)}");
+            var targetUri = new Uri(baseUri, $"report?ip={HttpUtility.UrlEncode(ip)}&categories={categoryStr}&comment={Uri.EscapeDataString(comment)}");
             HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(targetUri, null, cancellationToken);
 
             return await HandleSingleResultAsync<ReportUpdate>(httpResponseMessage, cancellationToken);
@@ -100,14 +108,6 @@
 
             T result = await httpResponseMessage.Content.ReadFromJsonAsync<T>(jsonSerializerOptions, cancellationToken);
             return (result, rateLimit);
-        }
-
-        private async Task<(T Data, M Metadata, RateLimit RateLimit)> HandleSingleResultAsync<T, M>(HttpResponseMessage httpResponseMessage, CancellationToken cancellationToken)
-            where T : IApiEntity
-            where M : IApiMetadata
-        {
-            (SingleEntryReply<T, M> data, RateLimit rateLimit) = await HandleResultAsync<SingleEntryReply<T, M>>(httpResponseMessage, cancellationToken);
-            return (data.Data, data.Meta, rateLimit);
         }
 
         private async Task<(T Data, RateLimit RateLimit)> HandleSingleResultAsync<T>(HttpResponseMessage httpResponseMessage, CancellationToken cancellationToken)

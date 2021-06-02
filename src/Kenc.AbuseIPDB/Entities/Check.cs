@@ -27,6 +27,9 @@
         [JsonPropertyName("countryName")]
         public string CountryName { get; set; }
 
+        [JsonPropertyName("domain")]
+        public string Domain { get; set; }
+
         [JsonPropertyName("usageType")]
         public string UsageType { get; set; }
 
