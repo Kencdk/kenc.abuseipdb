@@ -68,7 +68,7 @@ stages:
       name: dotnet_restore
     - script: "dotnet build $(solution) -c $(BuildConfiguration) /p:version=$(Build.BuildNumber) /p:assemblyversion=$(assemblyVersionStr)"
       name:  dotnet_build
-    - script: "dotnet test $(solution) --logger trx"
+    - script: "dotnet test $(solution) --logger trx --filter TestCategory!=IntegrationTests"
       name:  dotnet_test
     - task: CopyFiles@2
       inputs:
