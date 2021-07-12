@@ -50,7 +50,6 @@ stages:
         name: SetPRBuildName
       - bash: |
            echo "##vso[build.updatebuildnumber]$(major).$(minor)-$(Build.SourceBranchName).$(brpatch)"
-           echo "SET BUILD NUMBER "
            echo "##vso[task.setvariable variable=assemblyVersionStr]$(major).$(minor).$(brpatch)"
         condition: ne(variables['Build.Reason'], 'PullRequest')
         name: SetBranchBuildName
