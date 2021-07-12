@@ -7,9 +7,8 @@
     ********
     -->
   <PropertyGroup>  
-    <LangVersion>9.0</LangVersion>
     <FileAlignment>512</FileAlignment>
-    <AnalysisVersion>Latest</AnalysisVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
 
   <!-- include Ken Christensen in all assemblies -->
@@ -28,11 +27,11 @@
     <EnlistmentRoot Condition="!HasTrailingSlash('$(EnlistmentRoot)')">$(EnlistmentRoot)\</EnlistmentRoot>
     <MSBuildOverrides>$(MSBuildToolsPath)</MSBuildOverrides>
     
-    <!-- setup intermediate folder to be root\Intermedia\ with unique subfolder paths -->
-    <IntermediateRootPath>$(EnlistmentRoot)Intermediates</IntermediateRootPath>
+    <!-- setup intermediate folder to be root\intermedia\ with unique subfolder paths -->
+    <IntermediateRootPath>$(EnlistmentRoot)intermediates</IntermediateRootPath>
     <IntermediateOutputPath>$(IntermediateRootPath)\$(Configuration)\$(Platform)\$(OutputSubdir)</IntermediateOutputPath>
 
-    <OutputRootPath>$(EnlistmentRoot)Drops</OutputRootPath>
+    <OutputRootPath>$(EnlistmentRoot)drops</OutputRootPath>
     <OutputPath>$(OutputRootPath)\$(Configuration)\$(Platform)\$(OutputSubdir)</OutputPath>
 
     <!-- Add generated xml documentation files to packaged project output -->
