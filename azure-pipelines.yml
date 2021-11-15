@@ -1,5 +1,4 @@
 # pipeline for building Kenc.ACMELib.
-
 trigger:
 - main
 
@@ -9,7 +8,7 @@ pool:
 variables:
    major: 1
    minor: 0
-   beta: true
+   beta: false
    solution: '**/*.sln'
    buildConfiguration: 'Release'
 
@@ -29,7 +28,7 @@ stages:
       - bash: |
            echo "##vso[build.updatebuildnumber]$(major).$(minor).$(patch)"
            echo "##vso[task.setvariable variable=assemblyVersionStr]$(major).$(minor).$(patch)"
-        condition: ne(variables['beta'], true)
+        condition: ne(variables['beta'], false)
         name: SetMasterBuildName
       - bash: |
            echo "##vso[build.updatebuildnumber]$(major).$(minor).$(patch)-beta"
@@ -59,11 +58,15 @@ stages:
 - stage: Build_Steps
   displayName: Build_Steps
   condition: always()
-  jobs:  
+  jobs:
   - job: Build_Steps
     timeoutInMinutes: 10 # how long to run the job before automatically cancelling
     displayName: Build_Steps
     steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        useGlobalJson: true
     - script: dotnet restore $(solution)
       name: dotnet_restore
     - script: "dotnet build $(solution) -c $(BuildConfiguration) /p:version=$(Build.BuildNumber) /p:assemblyversion=$(assemblyVersionStr)"
