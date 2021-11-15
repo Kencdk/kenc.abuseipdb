@@ -9,6 +9,7 @@
     using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Text.Json;
+    using System.Text.Json.Serialization;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web;
@@ -27,7 +28,7 @@
         private readonly HttpClient httpClient;
         private static readonly JsonSerializerOptions jsonSerializerOptions = new()
         {
-            IgnoreNullValues = true
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
 
         /// <summary>
