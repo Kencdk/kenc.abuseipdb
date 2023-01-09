@@ -7,8 +7,8 @@
     ********
     -->
   <PropertyGroup>  
+    <LangVersion>11.0</LangVersion>
     <FileAlignment>512</FileAlignment>
-    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
 
   <!-- include Ken Christensen in all assemblies -->
@@ -16,7 +16,7 @@
     <Company>Ken Christensen</Company>
     <Product>Kenc.AbuseIPDB</Product>
     <Authors>Ken Christensen</Authors>
-    <Copyright>© 2021 Ken Christensen. All rights reserved.</Copyright>
+    <Copyright>© 2023 Ken Christensen. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <!-- Saving some paths that are used elsewhere in MSBuild settings and targets -->
