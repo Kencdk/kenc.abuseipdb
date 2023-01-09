@@ -32,7 +32,7 @@
         /// <param name="categories">Categories of the report.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
-        /// <remarks>STRIP ANY PERSONALLY IDENTIFIABLE INFORMATION (PPI); AbuseIPDB IS NOT RESPONSIBLE FOR PII YOU REVEAL.</remarks>
+        /// <remarks>STRIP ANY PERSONALLY IDENTIFIABLE INFORMATION (PII); AbuseIPDB IS NOT RESPONSIBLE FOR PII YOU REVEAL.</remarks>
         Task<(ReportUpdate Data, RateLimit rateLimit)> ReportAsync(string ip, string comment, Category[] categories, CancellationToken cancellationToken = default);
 
         /// <summary>

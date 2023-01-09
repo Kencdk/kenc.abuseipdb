@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <LangVersion>10.0</LangVersion>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
@@ -16,7 +15,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <PackageTags>AbuseIPDB</PackageTags>
-    <Copyright>2021 Ken Christensen</Copyright>
+    <Copyright>2023 Ken Christensen</Copyright>
     <Description>Cache for Kenc.AbuseIPDB based on LazyCache.</Description>
 
     <!-- source link properties -->
